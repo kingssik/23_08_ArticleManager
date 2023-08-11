@@ -44,7 +44,10 @@ class Main {
           System.out.println("게시글이 없습니다.");
           continue;
         } else {
-          System.out.println("게시글이 존재");
+          for (int i = articles.size() - 1; i >= 0; i--) {
+            Article article = articles.get(i);
+            System.out.printf("%d   |   %s\n", article.id, article.title);
+          }
         }
 
       } else {
