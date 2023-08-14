@@ -1,2 +1,6 @@
 .idea
 out
+.classpath
+.project
+Article_Manager.eml
+Article_Manager.iml
