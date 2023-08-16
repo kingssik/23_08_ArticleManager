@@ -50,15 +50,7 @@ public class App {
         String[] cmdBits = cmd.split(" ");
         int id = Integer.parseInt(cmdBits[2]);
 
-        int foundIdx = -1;
-
-        for (int i = 0; i < articles.size(); i++) {
-          Article article = articles.get(i);
-          if (article.id == id) {
-            foundIdx = i;
-            break;
-          }
-        }
+        int foundIdx = getArticleIndexById(id);
 
         if (foundIdx == -1) {
           System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
@@ -72,15 +64,7 @@ public class App {
         String[] cmdBits = cmd.split(" ");
         int id = Integer.parseInt(cmdBits[2]);
 
-        Article foundArticle = null;
-
-        for (int i = 0; i < articles.size(); i++) {
-          Article article = articles.get(i);
-          if (article.id == id) {
-            foundArticle = article;
-            break;
-          }
-        }
+        Article foundArticle = getArticleById(id);
 
         if (foundArticle == null) {
           System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
@@ -101,20 +85,13 @@ public class App {
         String[] cmdBits = cmd.split(" ");
         int id = Integer.parseInt(cmdBits[2]);
 
-        Article foundArticle = null;
-
-        for (int i = 0; i < articles.size(); i++) {
-          Article article = articles.get(i);
-          if (article.id == id) {
-            foundArticle = article;
-            break;
-          }
-        }
+        Article foundArticle = getArticleById(id);
 
         if (foundArticle == null) {
           System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
           continue;
         }
+
         foundArticle.increaseViewCnt();
         System.out.printf("번호 : %d\n", foundArticle.id);
         System.out.printf("날짜 : %s\n", foundArticle.regDate);
@@ -141,6 +118,45 @@ public class App {
 
     sc.close();
     System.out.println("== 프로그램 종료 ==");
+  }
+
+  private int getArticleIndexById(int id) {
+    int i = 0;
+
+    for (Article article : articles) {
+      if (article.id == id) {
+        return i;
+      }
+      i++;
+    }
+
+    return -1;
+  }
+
+  private Article getArticleById(int id) {
+//    발전과정1
+//    for (int i = 0; i < articles.size(); i++) {
+//      Article article = articles.get(i);
+//
+//      if (article.id == id) {
+//        return article;
+//      }
+//    }
+
+//    발전과정2
+//    for (Article article : articles) {
+//      if (article.id == id) {
+//        return article;
+//      }
+//    }
+
+    int index = getArticleIndexById(id);
+
+    if (index != -1) {
+      return articles.get(index);
+    }
+
+    return null;
   }
 
   private void makeTestData() {
