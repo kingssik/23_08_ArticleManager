@@ -99,14 +99,32 @@ public class App {
         System.out.printf("내용 : %s\n", foundArticle.body);
         System.out.printf("조회수 : %d\n", foundArticle.viewCnt);
 
-      } else if (cmd.equals("article list")) {
+      } else if (cmd.startsWith("article list")) {
         if (articles.size() == 0) {
           System.out.println("게시글이 없습니다.");
           continue;
         } else {
+          String searchKeyword = cmd.substring("article list".length()).trim();
+//          System.out.printf("검색어 : %s\n", searchKeyword);
+
+          List<Article> forPrintArticles = articles;
+          if (searchKeyword.length() > 0) {
+            forPrintArticles = new ArrayList<>();
+
+            for (Article article : articles) {
+              if (article.title.contains(searchKeyword)) {
+                forPrintArticles.add(article);
+              }
+            }
+            if (forPrintArticles.size() == 0) {
+              System.out.println("검색결과가 없습니다");
+              continue;
+            }
+          }
+
           System.out.println("번호    |    제목    |    조회수");
-          for (int i = articles.size() - 1; i >= 0; i--) {
-            Article article = articles.get(i);
+          for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+            Article article = forPrintArticles.get(i);
             System.out.printf("%4d    |    %2s    |    %3d\n", article.id, article.title, article.viewCnt);
           }
         }
