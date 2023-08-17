@@ -1,6 +1,7 @@
 package com.KoreaIT.java.AM;
 
 import com.KoreaIT.java.AM.dto.Article;
+import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.util.Util;
 
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import java.util.Scanner;
 
 public class App {
   private List<Article> articles;
+  private List<Member> members;
 
   App() {
     articles = new ArrayList<>();
+    members = new ArrayList<>();
   }
 
   public void start() {
@@ -31,8 +34,38 @@ public class App {
       if (cmd.equals("system exit")) {
         break;
       }
+      if (cmd.equals("member join")) {
+        int id = members.size() + 1;
 
-      if (cmd.equals("article write")) {
+        String regDate = Util.getNowDateStr();
+        System.out.printf("로그인 아이디 : ");
+        String loginId = sc.nextLine();
+
+        String loginPw = null;
+        String loginPwCheck = null;
+        while (true) {
+          System.out.printf("로그인 비밀번호 : ");
+          loginPw = sc.nextLine();
+          System.out.printf("로그인 비밀번호 확인 : ");
+          loginPwCheck = sc.nextLine();
+
+          if (loginPw.equals(loginPwCheck) == false) {
+            System.out.println("비밀번호를 다시 입력하세요");
+            continue;
+          }
+
+          break;
+        }
+
+        System.out.printf("이름 : ");
+        String name = sc.nextLine();
+
+        Member member = new Member(id, regDate, loginId, loginPw, name);
+        members.add(member);
+
+        System.out.printf("%d번 회원이 가입 했습니다.\n", id);
+
+      } else if (cmd.equals("article write")) {
         int id = articles.size() + 1;
 
         String regDate = Util.getNowDateStr();
@@ -152,28 +185,10 @@ public class App {
   }
 
   private Article getArticleById(int id) {
-//    발전과정1
-//    for (int i = 0; i < articles.size(); i++) {
-//      Article article = articles.get(i);
-//
-//      if (article.id == id) {
-//        return article;
-//      }
-//    }
-
-//    발전과정2
-//    for (Article article : articles) {
-//      if (article.id == id) {
-//        return article;
-//      }
-//    }
-
     int index = getArticleIndexById(id);
-
     if (index != -1) {
       return articles.get(index);
     }
-
     return null;
   }
 
