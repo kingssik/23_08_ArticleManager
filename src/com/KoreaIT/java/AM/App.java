@@ -1,6 +1,7 @@
 package com.KoreaIT.java.AM;
 
 import com.KoreaIT.java.AM.controller.ArticleController;
+import com.KoreaIT.java.AM.controller.Controller;
 import com.KoreaIT.java.AM.controller.MemberController;
 import com.KoreaIT.java.AM.dto.Article;
 import com.KoreaIT.java.AM.dto.Member;
@@ -39,28 +40,28 @@ public class App {
       if (cmd.equals("system exit")) {
         break;
       }
-      if (cmd.equals("member join")) {
-        memberController.doJoin();
 
-      } else if (cmd.equals("article write")) {
-        articleController.doWrite();
+      String[] cmdBits = cmd.split(" ");  // cmd = "article detail"
+      String controllerName = cmdBits[0]; // "article"
+      String actionMethodName = cmdBits[1]; // "detail"
 
-      } else if (cmd.startsWith("article delete ")) {
-        articleController.doDelete(cmd);
+      if (cmdBits.length == 1) {
+        System.out.println("존재하지 않는 명령어입니다.");
+        continue;
+      }
 
-      } else if (cmd.startsWith("article modify ")) {
-        articleController.doModify(cmd);
+      Controller controller = null;
 
-      } else if (cmd.startsWith("article detail ")) {
-        articleController.showDetail(cmd);
-
-      } else if (cmd.startsWith("article list")) {
-        articleController.showList(cmd);
-
+      if (controllerName.equals("article")) {
+        controller = articleController;
+      } else if (controllerName.equals("member")) {
+        controller = memberController;
       } else {
         System.out.println("존재하지 않는 명령어입니다.");
         continue;
       }
+
+      controller.doAction(cmd, actionMethodName);
     }
 
     sc.close();

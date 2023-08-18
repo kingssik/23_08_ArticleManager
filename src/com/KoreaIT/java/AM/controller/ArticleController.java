@@ -1,16 +1,41 @@
 package com.KoreaIT.java.AM.controller;
 
 import com.KoreaIT.java.AM.dto.Article;
-import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArticleController {
+public class ArticleController extends Controller {
   private List<Article> articles;
   private Scanner sc;
+  private String cmd;
+  private String actionMethodName;
+
+  @Override
+  public void doAction(String cmd, String actionMethodName) {
+    this.cmd = cmd;
+    this.actionMethodName = actionMethodName;
+
+    switch (actionMethodName) {
+      case "list":
+        showList();
+        break;
+      case "detail":
+        showDetail();
+        break;
+      case "write":
+        doWrite();
+        break;
+      case "modify":
+        doModify();
+        break;
+      case "delete":
+        doDelete();
+        break;
+    }
+  }
 
   public ArticleController(List<Article> articles, Scanner sc) {
     this.sc = sc;
@@ -32,7 +57,7 @@ public class ArticleController {
     System.out.printf("%d번 글이 생성 되었습니다.\n", id);
   }
 
-  public void showList(String cmd) {
+  public void showList() {
     if (articles.size() == 0) {
       System.out.println("게시글이 없습니다.");
       return;
@@ -62,7 +87,7 @@ public class ArticleController {
     }
   }
 
-  public void showDetail(String cmd) {
+  public void showDetail() {
     String[] cmdBits = cmd.split(" ");
     int id = Integer.parseInt(cmdBits[2]);
 
@@ -81,7 +106,7 @@ public class ArticleController {
     System.out.printf("조회수 : %d\n", foundArticle.viewCnt);
   }
 
-  public void doModify(String cmd) {
+  public void doModify() {
     String[] cmdBits = cmd.split(" ");
     int id = Integer.parseInt(cmdBits[2]);
 
@@ -103,7 +128,7 @@ public class ArticleController {
     System.out.printf("%d번 글이 수정 되었습니다.\n", id);
   }
 
-  public void doDelete(String cmd) {
+  public void doDelete() {
     String[] cmdBits = cmd.split(" ");
     int id = Integer.parseInt(cmdBits[2]);
 
