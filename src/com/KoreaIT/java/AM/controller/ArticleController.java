@@ -169,7 +169,7 @@ public class ArticleController extends Controller {
   }
 
   public void makeTestData() {
-    System.out.println("테스트데이터를 생성합니다");
+    System.out.println("게시물 테스트데이터를 생성합니다");
 
     articles.add(new Article(1, Util.getNowDateStr(), "title1", "body1", 11));
     articles.add(new Article(2, Util.getNowDateStr(), "title2", "body2", 22));

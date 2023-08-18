@@ -1,5 +1,6 @@
 package com.KoreaIT.java.AM.controller;
 
+import com.KoreaIT.java.AM.dto.Article;
 import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.util.Util;
 
@@ -61,15 +62,6 @@ public class MemberController extends Controller {
     System.out.printf("%s님이 로그인 했습니다\n", loginedMember.name);
   }
 
-  private Member getMemberByLoginId(String loginId) {
-    int idx = getMemberIndexByLoginId(loginId);
-
-    if (idx == -1) {
-      return null;
-    }
-    return members.get(idx);
-  }
-
   private void doJoin() {
     int id = members.size() + 1;
 
@@ -111,6 +103,15 @@ public class MemberController extends Controller {
     System.out.printf("%d번 회원이 가입 했습니다.\n", id);
   }
 
+  private Member getMemberByLoginId(String loginId) {
+    int idx = getMemberIndexByLoginId(loginId);
+
+    if (idx == -1) {
+      return null;
+    }
+    return members.get(idx);
+  }
+
   private boolean isJoinableLoginId(String loginId) {
     int index = getMemberIndexByLoginId(loginId);
     if (index == -1) {
@@ -129,6 +130,14 @@ public class MemberController extends Controller {
       i++;
     }
     return -1;
+  }
+
+  public void makeTestData() {
+    System.out.println("회원 테스트데이터를 생성합니다");
+
+    members.add(new Member(1, Util.getNowDateStr(), "admin", "admin", "admin"));
+    members.add(new Member(2, Util.getNowDateStr(), "test1", "test1", "회원1"));
+    members.add(new Member(3, Util.getNowDateStr(), "test2", "test2", "회원2"));
   }
 
 }
